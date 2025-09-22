@@ -1,144 +1,52 @@
 import asyncio
 import json
 import logging
-import sys
-from typing import Any, Sequence
-
-from mcp.server.models import InitializationOptions
-from mcp.server import NotificationOptions, Server
-from mcp.types import Tool, TextContent, LoggingLevel
-
-from .connector import AzureSQLConnector
+from mcp.server.fastmcp import FastMCP
+from connector import AzureSQLConnector
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create server instance
-server = Server("azure-sql-mcp")
+mcp = FastMCP("azure-sql-mcp")
 
 # Create connector instance
 connector = AzureSQLConnector()
 
-@server.list_tools()
-async def handle_list_tools() -> list[Tool]:
-    """List available tools"""
-    return [
-        Tool(
-            name="execute_query",
-            description="Execute a SQL query on Azure SQL Database",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "SQL query to execute"
-                    },
-                    "parameters": {
-                        "type": "array",
-                        "description": "Query parameters",
-                        "items": {"type": "string"},
-                        "default": []
-                    }
-                },
-                "required": ["query"]
-            }
-        ),
-        Tool(
-            name="get_tables",
-            description="Get list of tables in the database",
-            inputSchema={
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        ),
-        Tool(
-            name="get_table_schema",
-            description="Get schema information for a specific table",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "table_name": {
-                        "type": "string",
-                        "description": "Name of the table"
-                    }
-                },
-                "required": ["table_name"]
-            }
-        ),
-        # Tool(
-        #     name="create_table",
-        #     description="Create a new table in the database",
-        #     inputSchema={
-        #         "type": "object",
-        #         "properties": {
-        #             "table_name": {
-        #                 "type": "string",
-        #                 "description": "Name of the table to create"
-        #             },
-        #             "columns": {
-        #                 "type": "string",
-        #                 "description": "Column definitions (e.g., 'id INT PRIMARY KEY, name VARCHAR(100)')"
-        #             }
-        #         },
-        #         "required": ["table_name", "columns"]
-        #     }
-        # ),
-        # Tool(
-        #     name="insert_data",
-        #     description="Insert data into a table",
-        #     inputSchema={
-        #         "type": "object",
-        #         "properties": {
-        #             "table_name": {
-        #                 "type": "string",
-        #                 "description": "Name of the table"
-        #             },
-        #             "columns": {
-        #                 "type": "array",
-        #                 "description": "Column names",
-        #                 "items": {"type": "string"}
-        #             },
-        #             "values": {
-        #                 "type": "array",
-        #                 "description": "Values to insert",
-        #                 "items": {"type": "string"}
-        #             }
-        #         },
-        #         "required": ["table_name", "columns", "values"]
-        #     }
-        # )
-    ]
+import json
+import logging
+from mcp.server.fastmcp import FastMCP
+from connector import AzureSQLConnector
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-@server.call_tool()
-async def handle_call_tool(name: str, arguments: dict | None) -> list[TextContent]:
-    """Handle tool calls"""
-    if arguments is None:
-        arguments = {}
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Create server instance
+mcp = FastMCP("azure-sql-mcp")
+
+# Create connector instance
+try:
+    connector = AzureSQLConnector()
+except Exception as e:
+    logger.warning(f"Failed to initialize connector: {e}")
+    connector = None
+
+@mcp.tool()
+def execute_query(query: str, parameters: list[str] = None) -> str:
+    """Execute a SQL query on Azure SQL Database"""
+    if not connector:
+        return "Error: Database connector not initialized"
     
-    try:
-        if name == "execute_query":
-            return await execute_query(arguments)
-        elif name == "get_tables":
-            return await get_tables()
-        elif name == "get_table_schema":
-            return await get_table_schema(arguments)
-        # elif name == "create_table":
-        #     return await create_table(arguments)
-        # elif name == "insert_data":
-        #     return await insert_data(arguments)
-        else:
-            return [TextContent(type="text", text=f"Unknown tool: {name}")]
-    except Exception as e:
-        logger.error(f"Tool execution failed: {e}")
-        return [TextContent(type="text", text=f"Error: {str(e)}")]
-
-# [Keep all your existing tool implementation functions here]
-async def execute_query(arguments: dict) -> list[TextContent]:
-    """Execute SQL query"""
-    query = arguments.get("query", "")
-    parameters = arguments.get("parameters", [])
+    if parameters is None:
+        parameters = []
     
     try:
         with connector.get_connection() as conn:
@@ -154,21 +62,19 @@ async def execute_query(arguments: dict) -> list[TextContent]:
                 for row in results:
                     data.append(dict(zip(columns, row)))
                 
-                return [TextContent(
-                    type="text",
-                    text=f"Query executed successfully.\nResults:\n{json.dumps(data, indent=2, default=str)}"
-                )]
+                return f"Query executed successfully.\nResults:\n{json.dumps(data, indent=2, default=str)}"
             else:
                 conn.commit()
-                return [TextContent(
-                    type="text",
-                    text="Query executed successfully."
-                )]
+                return "Query executed successfully."
     except Exception as e:
-        return [TextContent(type="text", text=f"Query execution failed: {str(e)}")]
+        return f"Query execution failed: {str(e)}"
 
-async def get_tables() -> list[TextContent]:
-    """Get list of tables"""
+@mcp.tool()
+def get_tables() -> str:
+    """Get list of tables in the database"""
+    if not connector:
+        return "Error: Database connector not initialized"
+    
     try:
         with connector.get_connection() as conn:
             cursor = conn.cursor()
@@ -179,16 +85,15 @@ async def get_tables() -> list[TextContent]:
             """)
             tables = [row[0] for row in cursor.fetchall()]
             
-            return [TextContent(
-                type="text",
-                text=f"Tables in database:\n{json.dumps(tables, indent=2)}"
-            )]
+            return f"Tables in database:\n{json.dumps(tables, indent=2)}"
     except Exception as e:
-        return [TextContent(type="text", text=f"Failed to get tables: {str(e)}")]
+        return f"Failed to get tables: {str(e)}"
 
-async def get_table_schema(arguments: dict) -> list[TextContent]:
-    """Get table schema"""
-    table_name = arguments.get("table_name", "")
+@mcp.tool()
+def get_table_schema(table_name: str) -> str:
+    """Get schema information for a specific table"""
+    if not connector:
+        return "Error: Database connector not initialized"
     
     try:
         with connector.get_connection() as conn:
@@ -209,78 +114,67 @@ async def get_table_schema(arguments: dict) -> list[TextContent]:
                     "default_value": row[3]
                 })
             
-            return [TextContent(
-                type="text",
-                text=f"Schema for table '{table_name}':\n{json.dumps(columns, indent=2)}"
-            )]
+            return f"Schema for table '{table_name}':\n{json.dumps(columns, indent=2)}"
     except Exception as e:
-        return [TextContent(type="text", text=f"Failed to get schema: {str(e)}")]
+        return f"Failed to get schema: {str(e)}"
 
-# async def create_table(arguments: dict) -> list[TextContent]:
-#     """Create table"""
-#     table_name = arguments.get("table_name", "")
-#     columns = arguments.get("columns", "")
+@mcp.tool()
+def get_largest_table() -> str:
+    """Find the table with the highest number of rows"""
+    if not connector:
+        return "Error: Database connector not initialized"
     
-#     try:
-#         with connector.get_connection() as conn:
-#             cursor = conn.cursor()
-#             query = f"CREATE TABLE {table_name} ({columns})"
-#             cursor.execute(query)
-#             conn.commit()
-            
-#             return [TextContent(
-#                 type="text",
-#                 text=f"Table '{table_name}' created successfully."
-#             )]
-#     except Exception as e:
-#         return [TextContent(type="text", text=f"Failed to create table: {str(e)}")]
-
-# async def insert_data(arguments: dict) -> list[TextContent]:
-#     """Insert data into table"""
-#     table_name = arguments.get("table_name", "")
-#     columns = arguments.get("columns", [])
-#     values = arguments.get("values", [])
-    
-#     try:
-#         with connector.get_connection() as conn:
-#             cursor = conn.cursor()
-#             columns_str = ", ".join(columns)
-#             placeholders = ", ".join(["?" for _ in values])
-#             query = f"INSERT INTO {table_name} ({columns_str}) VALUES ({placeholders})"
-#             cursor.execute(query, values)
-#             conn.commit()
-            
-#             return [TextContent(
-#                 type="text",
-#                 text=f"Data inserted into '{table_name}' successfully."
-#             )]
-#     except Exception as e:
-#         return [TextContent(type="text", text=f"Failed to insert data: {str(e)}")]
-
-async def main():
-    """Main entry point"""
-    from mcp.server.stdio import stdio_server
-    
-    async with stdio_server() as (read_stream, write_stream):
-        await server.run(
-            read_stream,
-            write_stream,
-            InitializationOptions(
-                server_name="azure-sql-mcp",
-                server_version="1.0.0",
-                capabilities=server.get_capabilities(
-                    notification_options=NotificationOptions(),
-                    experimental_capabilities={},
-                ),
-            ),
-        )
-
-def start():
-    """Synchronous entry point to run the asyncio server."""
     try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        logger.info("Server shut down.")
+        with connector.get_connection() as conn:
+            cursor = conn.cursor()
+            # Get all tables and their row counts
+            cursor.execute("""
+                SELECT 
+                    t.TABLE_SCHEMA,
+                    t.TABLE_NAME,
+                    p.rows AS row_count
+                FROM INFORMATION_SCHEMA.TABLES t
+                INNER JOIN sys.partitions p ON p.object_id = OBJECT_ID(t.TABLE_SCHEMA + '.' + t.TABLE_NAME)
+                WHERE t.TABLE_TYPE = 'BASE TABLE' AND p.index_id < 2
+                ORDER BY p.rows DESC
+            """)
+            
+            results = cursor.fetchall()
+            if not results:
+                return "No tables found in the database."
+            
+            # Format results
+            table_data = []
+            for row in results:
+                table_data.append({
+                    "schema": row[0],
+                    "table_name": row[1],
+                    "row_count": row[2]
+                })
+            
+            largest_table = table_data[0]
+            return f"Table with highest row count:\n" \
+                   f"Schema: {largest_table['schema']}\n" \
+                   f"Table: {largest_table['table_name']}\n" \
+                   f"Row Count: {largest_table['row_count']:,}\n\n" \
+                   f"All tables by row count:\n{json.dumps(table_data, indent=2)}"
+    except Exception as e:
+        return f"Failed to get largest table: {str(e)}"
 
+ 
+from mcp.server.fastmcp import FastMCP
+from fastapi import FastAPI
+import contextlib
+@contextlib.asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with contextlib.AsyncExitStack() as stack:
+        await stack.enter_async_context(mcp.session_manager.run())
+        yield
+
+app = FastAPI(lifespan=lifespan)
+app.mount("/", mcp.streamable_http_app())
+PORT = os.environ.get("PORT", 8000)
 if __name__ == "__main__":
-    start()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
+ 
