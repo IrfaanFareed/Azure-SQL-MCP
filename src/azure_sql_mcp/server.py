@@ -62,10 +62,10 @@ def execute_query(query: str, parameters: list[str] = None) -> str:
                 for row in results:
                     data.append(dict(zip(columns, row)))
                 
-                return f"Query executed successfully.\nResults:\n{json.dumps(data, indent=2, default=str)}"
+                return json.dumps(data, indent=2, default=str)
             else:
                 conn.commit()
-                return "Query executed successfully."
+                return "Query executed successfully"
     except Exception as e:
         return f"Query execution failed: {str(e)}"
 
@@ -85,7 +85,7 @@ def get_tables() -> str:
             """)
             tables = [row[0] for row in cursor.fetchall()]
             
-            return f"Tables in database:\n{json.dumps(tables, indent=2)}"
+            return json.dumps(tables, indent=2)
     except Exception as e:
         return f"Failed to get tables: {str(e)}"
 
@@ -114,53 +114,9 @@ def get_table_schema(table_name: str) -> str:
                     "default_value": row[3]
                 })
             
-            return f"Schema for table '{table_name}':\n{json.dumps(columns, indent=2)}"
+            return json.dumps(columns, indent=2)
     except Exception as e:
         return f"Failed to get schema: {str(e)}"
-
-@mcp.tool()
-def get_largest_table() -> str:
-    """Find the table with the highest number of rows"""
-    if not connector:
-        return "Error: Database connector not initialized"
-    
-    try:
-        with connector.get_connection() as conn:
-            cursor = conn.cursor()
-            # Get all tables and their row counts
-            cursor.execute("""
-                SELECT 
-                    t.TABLE_SCHEMA,
-                    t.TABLE_NAME,
-                    p.rows AS row_count
-                FROM INFORMATION_SCHEMA.TABLES t
-                INNER JOIN sys.partitions p ON p.object_id = OBJECT_ID(t.TABLE_SCHEMA + '.' + t.TABLE_NAME)
-                WHERE t.TABLE_TYPE = 'BASE TABLE' AND p.index_id < 2
-                ORDER BY p.rows DESC
-            """)
-            
-            results = cursor.fetchall()
-            if not results:
-                return "No tables found in the database."
-            
-            # Format results
-            table_data = []
-            for row in results:
-                table_data.append({
-                    "schema": row[0],
-                    "table_name": row[1],
-                    "row_count": row[2]
-                })
-            
-            largest_table = table_data[0]
-            return f"Table with highest row count:\n" \
-                   f"Schema: {largest_table['schema']}\n" \
-                   f"Table: {largest_table['table_name']}\n" \
-                   f"Row Count: {largest_table['row_count']:,}\n\n" \
-                   f"All tables by row count:\n{json.dumps(table_data, indent=2)}"
-    except Exception as e:
-        return f"Failed to get largest table: {str(e)}"
-
  
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
