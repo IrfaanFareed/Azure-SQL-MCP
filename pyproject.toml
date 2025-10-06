@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "azure-sql-mcp"
+name = "sql-server-mcp"
 version = "1.0.0"
-description = "MCP server for Azure SQL database operations"
+description = "MCP server for SQL Server database operations"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
@@ -24,7 +24,7 @@ classifiers = [
     "Topic :: Database",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-keywords = ["mcp", "azure", "sql", "database", "model-context-protocol"]
+keywords = ["mcp", "sqlserver", "sql", "database", "model-context-protocol"]
 dependencies = [
     "mcp>=1.0.0",
     "pyodbc>=4.0.0",
@@ -41,19 +41,15 @@ dev = [
     "mypy>=1.0.0",
     "pre-commit>=3.0.0",
 ]
-azure = [
-    "azure-identity>=1.12.0",
-    "azure-keyvault-secrets>=4.7.0",
-]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/azure-sql-mcp"
-Repository = "https://github.com/yourusername/azure-sql-mcp"
-Documentation = "https://github.com/yourusername/azure-sql-mcp#readme"
-Issues = "https://github.com/yourusername/azure-sql-mcp/issues"
+Homepage = "https://github.com/yourusername/sql-server-mcp"
+Repository = "https://github.com/yourusername/sql-server-mcp"
+Documentation = "https://github.com/yourusername/sql-server-mcp#readme"
+Issues = "https://github.com/yourusername/sql-server-mcp/issues"
 
 [project.scripts]
-azure-sql-mcp = "azure_sql_mcp.server:start"
+sql-server-mcp = "azure_sql_mcp.server:start"
 
 [tool.setuptools.packages.find]
 where = ["src"]

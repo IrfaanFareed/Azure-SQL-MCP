@@ -2,52 +2,37 @@ import asyncio
 import json
 import logging
 from mcp.server.fastmcp import FastMCP
-from connector import AzureSQLConnector
+from connector import SQLServerConnector
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create server instance
-mcp = FastMCP("azure-sql-mcp")
-
-# Create connector instance
-connector = AzureSQLConnector()
-
-import json
-import logging
-from mcp.server.fastmcp import FastMCP
-from connector import AzureSQLConnector
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Create server instance
-mcp = FastMCP("azure-sql-mcp")
+mcp = FastMCP("sql-server-mcp")
 
 # Create connector instance
 try:
-    connector = AzureSQLConnector()
+    connector = SQLServerConnector()
 except Exception as e:
     logger.warning(f"Failed to initialize connector: {e}")
     connector = None
 
 @mcp.tool()
-def execute_query(query: str, parameters: list[str] = None) -> str:
-    """Execute a SQL query on Azure SQL Database"""
+def execute_query(query: str, parameters: list[str] = None, user_id: str = None) -> str:
+    """Execute a SQL query on SQL Server Database to perform only select operations based on the data from the get_views and get_view_schema tools."""
     if not connector:
         return "Error: Database connector not initialized"
     
     if parameters is None:
         parameters = []
     
+    # Inject user_id filter for SELECT queries
+    if user_id and query.strip().upper().startswith("SELECT"):
+        query = _inject_user_id_filter(query, user_id)
+        return query
+        
     try:
         with connector.get_connection() as conn:
             cursor = conn.cursor()
@@ -69,9 +54,59 @@ def execute_query(query: str, parameters: list[str] = None) -> str:
     except Exception as e:
         return f"Query execution failed: {str(e)}"
 
+def _inject_user_id_filter(query: str, user_id: str) -> str:
+    """Inject user_id filter into SELECT query while preserving other clauses"""
+    import re
+    
+    # Pattern to find WHERE clause and capture everything after it
+    # This handles ORDER BY, GROUP BY, HAVING, LIMIT, OFFSET, etc.
+    where_pattern = re.compile(r'\bWHERE\b', re.IGNORECASE)
+    
+    # Find clauses that should come after WHERE (ORDER BY, GROUP BY, etc.)
+    post_where_pattern = re.compile(
+        r'\b(ORDER\s+BY|GROUP\s+BY|HAVING|LIMIT|OFFSET|FETCH|FOR\s+XML|FOR\s+JSON|OPTION)\b',
+        re.IGNORECASE
+    )
+    
+    query_upper = query.upper()
+    
+    if 'WHERE' in query_upper:
+        # Query already has WHERE clause
+        # Find the position of WHERE
+        where_match = where_pattern.search(query)
+        if where_match:
+            where_pos = where_match.end()
+            
+            # Find the first post-WHERE clause (ORDER BY, GROUP BY, etc.)
+            post_where_match = post_where_pattern.search(query, where_pos)
+            
+            if post_where_match:
+                # Insert user_id condition before the post-WHERE clause
+                before_post_clause = query[:post_where_match.start()]
+                post_clause = query[post_where_match.start():]
+                modified_query = f"{before_post_clause} AND user_id = '{user_id}' {post_clause}"
+            else:
+                # No post-WHERE clause, just append at the end
+                modified_query = f"{query} AND user_id = '{user_id}'"
+    else:
+        # Query doesn't have WHERE clause
+        # Find the first post-WHERE clause (ORDER BY, GROUP BY, etc.)
+        post_where_match = post_where_pattern.search(query)
+        
+        if post_where_match:
+            # Insert WHERE clause before the post-WHERE clause
+            before_post_clause = query[:post_where_match.start()]
+            post_clause = query[post_where_match.start():]
+            modified_query = f"{before_post_clause} WHERE user_id = '{user_id}' {post_clause}"
+        else:
+            # No post-WHERE clause, just append WHERE at the end
+            modified_query = f"{query} WHERE user_id = '{user_id}'"
+    
+    return modified_query
+
 @mcp.tool()
-def get_tables() -> str:
-    """Get list of tables in the database"""
+def get_views() -> str:
+    """Get list of views in the database"""
     if not connector:
         return "Error: Database connector not initialized"
     
@@ -79,9 +114,10 @@ def get_tables() -> str:
         with connector.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT TABLE_NAME
-                FROM INFORMATION_SCHEMA.TABLES
-                WHERE TABLE_TYPE = 'BASE TABLE'
+                SELECT TABLE_SCHEMA AS SchemaName,
+                TABLE_NAME AS ViewName
+                FROM INFORMATION_SCHEMA.VIEWS
+                ORDER BY TABLE_SCHEMA, TABLE_NAME;
             """)
             tables = [row[0] for row in cursor.fetchall()]
             
@@ -90,8 +126,8 @@ def get_tables() -> str:
         return f"Failed to get tables: {str(e)}"
 
 @mcp.tool()
-def get_table_schema(table_name: str) -> str:
-    """Get schema information for a specific table"""
+def get_view_schema(view_name: str) -> str:
+    """Get schema information for a specific view"""
     if not connector:
         return "Error: Database connector not initialized"
     
@@ -99,11 +135,14 @@ def get_table_schema(table_name: str) -> str:
         with connector.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT
+                SELECT COLUMN_NAME  AS ColumnName,
+                DATA_TYPE    AS DataType,
+                IS_NULLABLE    AS IsNullable,
+                COLUMN_DEFAULT As Description
                 FROM INFORMATION_SCHEMA.COLUMNS
                 WHERE TABLE_NAME = ?
-                ORDER BY ORDINAL_POSITION
-            """, table_name)
+                ORDER BY TABLE_SCHEMA, ORDINAL_POSITION;
+            """, view_name)
             
             columns = []
             for row in cursor.fetchall():
@@ -128,8 +167,13 @@ async def lifespan(app: FastAPI):
         yield
 
 app = FastAPI(lifespan=lifespan)
-app.mount("/", mcp.streamable_http_app())
-PORT = os.environ.get("PORT", 8000)
+app.mount("/api", mcp.streamable_http_app())
+
+@app.get("/health")
+async def health_check():
+    return {"status": "Application is running"}
+
+PORT = int(os.environ.get("PORT", 3000))
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=PORT)

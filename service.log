@@ -1,0 +1,18 @@
+2025-09-26 09:56:06,978 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-09-26 09:56:06,979 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-09-26 09:56:07,157 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-09-29 05:07:14,633 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-09-29 05:07:14,682 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-09-29 05:07:15,336 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-09-29 05:43:19,937 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: b89c6215c52a4ea1b6781fc3bb11cdcc
+2025-09-29 05:44:05,098 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager shutting down
+2025-09-29 05:44:12,392 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-09-29 05:44:12,393 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-09-29 05:44:12,561 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-09-30 04:36:47,839 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-09-30 04:36:47,949 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-09-30 04:36:48,454 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-06 10:56:08,125 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-10-06 10:56:08,241 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-06 10:56:08,723 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-06 11:03:53,473 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: eacc5ea0f77046e2b2e048d281acb72d
