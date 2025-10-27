@@ -16,3 +16,51 @@
 2025-10-06 10:56:08,241 - connector - INFO - Available ODBC drivers: ['SQL Server']
 2025-10-06 10:56:08,723 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
 2025-10-06 11:03:53,473 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: eacc5ea0f77046e2b2e048d281acb72d
+2025-10-07 05:19:51,746 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-10-07 05:19:51,862 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-07 05:19:52,334 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-07 05:56:32,373 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager shutting down
+2025-10-07 06:10:00,474 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-10-07 06:10:00,475 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-07 06:10:00,514 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-07 06:12:11,224 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 4e1567f76b454d879359c2de1b06b258
+2025-10-07 07:21:54,436 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager shutting down
+2025-10-07 07:22:02,288 - connector - INFO - Connecting to server: server-vguard-forecast-dev-001.database.windows.net, database: v-guard-poc
+2025-10-07 07:22:02,288 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-07 07:22:02,328 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-07 07:37:48,110 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager shutting down
+2025-10-07 07:38:16,309 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-07 07:38:16,309 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-07 07:38:16,345 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-07 07:43:15,987 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 6e71b5e1b13f4db0a3734acecd68d5f2
+2025-10-07 07:43:18,623 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 37c16d8452c4453b894255a31b7bc74e
+2025-10-07 07:43:32,025 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 1298757ed196450d8e07b707acb96aca
+2025-10-07 09:23:34,868 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: e7e0ef5ce63e4fe79c2d1925381f35c8
+2025-10-07 09:27:05,883 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 71ca028a72864259b737f498c8004af4
+2025-10-07 09:27:16,334 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 5633966d06bf4657ad4324211a1ba338
+2025-10-07 09:27:59,496 - root - WARNING - Failed to validate request: Received request before initialization was complete
+2025-10-07 09:28:11,422 - root - WARNING - Failed to validate request: Received request before initialization was complete
+2025-10-07 09:29:08,055 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-10-08 08:12:18,608 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-08 08:12:18,713 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-08 08:12:18,901 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-09 07:15:47,576 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-09 07:15:47,677 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-09 07:15:47,929 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-14 12:10:23,025 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-14 12:10:23,153 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-14 12:10:23,456 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-15 10:20:10,850 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-15 10:20:10,956 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-15 10:20:11,174 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-22 06:09:29,854 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-22 06:09:29,956 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-22 06:09:30,159 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-22 09:08:13,416 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: 589fb03ab287468d9396ad580e0baf2f
+2025-10-22 09:15:35,719 - mcp.server.streamable_http_manager - INFO - Created new transport with session ID: cc77c0885b46424a9055a9f324ac9a75
+2025-10-23 05:39:02,252 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-23 05:39:02,322 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-23 05:39:02,687 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
+2025-10-27 04:57:50,674 - connector - INFO - Connecting to server: azure-sql-server-test.database.windows.net, database: test-db1
+2025-10-27 04:57:50,775 - connector - INFO - Available ODBC drivers: ['SQL Server']
+2025-10-27 04:57:51,102 - mcp.server.streamable_http_manager - INFO - StreamableHTTP session manager started
